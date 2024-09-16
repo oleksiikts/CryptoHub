@@ -11,7 +11,7 @@ if (-not (Test-Path ".git")) {
 git add .
 
 # Створіть коміт з поточним часом як повідомлення
-$message = "Автоматичний коміт: $(Get-Date)"
+$message = "fast commit"
 git commit -m $message
 
 # Пуште зміни на GitHub
