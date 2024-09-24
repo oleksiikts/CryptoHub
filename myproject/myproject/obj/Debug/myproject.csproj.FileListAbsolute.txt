@@ -1,0 +1,7 @@
+D:\Купець\myproject\myproject\bin\Debug\myproject.exe.config
+D:\Купець\myproject\myproject\bin\Debug\myproject.exe
+D:\Купець\myproject\myproject\bin\Debug\myproject.pdb
+D:\Купець\myproject\myproject\obj\Debug\myproject.csproj.AssemblyReference.cache
+D:\Купець\myproject\myproject\obj\Debug\myproject.csproj.CoreCompileInputs.cache
+D:\Купець\myproject\myproject\obj\Debug\myproject.exe
+D:\Купець\myproject\myproject\obj\Debug\myproject.pdb
