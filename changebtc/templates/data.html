@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Data</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo"><a href="{{ url_for('signin_page') }}">CryptoKupets</a></div>
+        <div class="nav-buttons">
+            <a href="{{ url_for('data_page') }}"><button>Data</button></a>
+            <button>Button 2</button>
+            <button>Button 3</button>
+        </div>
+        <div class="auth-buttons">
+            <a href="{{ url_for('signin_page') }}">
+                <button>Sign In</button>
+            </a>
+            <a href="{{ url_for('signup_page') }}">
+                <button>Sign Up</button>
+            </a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Cryptocurrency Data</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Last Price</th>
+                    <th>Change 24h</th>
+                    <th>Volume 24h</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data['data'] %}
+                <tr>
+                    <td>{{ item['instId'] }}</td>
+                    <td>{{ item['last'] }}</td>
+                    <td>{{ item['changePercentage'] }}</td>
+                    <td>{{ item['vol'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
