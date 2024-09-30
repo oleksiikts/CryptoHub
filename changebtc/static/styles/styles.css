@@ -1,0 +1,20 @@
+/* Стиль для калькулятора */
+#crypto-converter {
+    max-width: 400px;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+
+html, body {
+    height: 100%;
+}
+
+main {
+    flex-grow: 1;
+}
+
+
+.mt-custom {
+    margin-top: 100px; /* Заміни 100px на потрібне значення */
+}

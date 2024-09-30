@@ -13,10 +13,9 @@
     {% block head %}
     <title>{% block title %}{% endblock %}Kupets web page</title>
     {% endblock %}
-
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <header>
         <!-- Fixed navbar -->
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -38,38 +37,45 @@
                             <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                         </li>
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
                 </div>
             </div>
         </nav>
     </header>
-    <!-- <header class="header">
-        <div class="logo" href="{{ url_for('index') }}">CryptoKupets</div>
-        <div class="nav-buttons">
-            <a href="{{ url_for('data_page') }}"><button>Button 1</button></a>
-            <button>Button 2</button>
-            <button>Button 3</button>
+
+    {% block content %}
+    <main class="container flex-grow-1 mt-custom">
+        <h1 class="h3 mb-3 fw-normal text-center">Currency Exchange Calculator</h1>
+        <form id="crypto-converter" class="w-100 m-auto">
+            <div class="form-floating">
+                <select class="form-select" id="cryptoSelect" required>
+                    <option value="btc">Bitcoin (BTC)</option>
+                    <option value="sol">Solana (SOL)</option>
+                    <option value="eth">Ethereum (ETH)</option>
+                </select>
+                <label for="cryptoSelect">Select cryptocurrency</label>
+            </div>
+            <div class="form-floating mt-3">
+                <input type="number" class="form-control" id="cryptoAmount" placeholder="Enter amount" required>
+                <label for="cryptoAmount">Amount</label>
+            </div>
+            <div class="form-floating mt-3">
+                <input type="number" class="form-control" id="usdAmount" placeholder="USD Amount" readonly>
+                <label for="usdAmount">USD Equivalent</label>
+            </div>
+            <button class="btn btn-primary w-100 py-2 mt-3" type="submit">Convert</button>
+        </form>
+    </main>
+    {% endblock %}
+
+    <footer class="bg-dark text-light py-3 mt-auto">
+        <div class="container">
+            <p class="text-center mb-0">© 2017–2024</p>
         </div>
-        <div class="auth-buttons">
-            <a href="{{ url_for('signin_page') }}">
-                <button>Sign In</button>
-            </a>
-            <a href="{{ url_for('signup_page') }}">
-                <button>Sign Up</button>
-            </a>
-        </div>
-    </header> -->
-    <div id="content">
-        {% block content %}
-        {% endblock %}
-    </div>
-    <div id="footer">
-        {% block footer %}
-        {% endblock %}
-    </div>
+    </footer>
+
+    <!-- Підключення JS -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
 </body>
 
 </html>

@@ -1,60 +1,16 @@
-/*
-function calculate(event) {
-    event.preventDefault(); // Запобігти відправці форми
+document.getElementById('crypto-converter').addEventListener('submit', function(e) {
+    e.preventDefault();
 
-    const amount = parseFloat(document.getElementById('amount').value);
-    if (isNaN(amount)) {
-        document.getElementById('result').innerText = 'Please enter a valid amount';
-        return; // Вихід з функції, якщо amount не число
-    }
-    
-    const crypto = document.getElementById('crypto').value;
-    const currency = document.getElementById('currency').value;
+    let cryptoSelect = document.getElementById('cryptoSelect').value;
+    let cryptoAmount = document.getElementById('cryptoAmount').value;
+    let usdAmountField = document.getElementById('usdAmount');
 
-    // Симуляція курсів конвертації
-    const rates = {
-        bitcoin: { usd: 30000, eur: 28000 },    
-        ethereum: { usd: 2000, eur: 1800 },
-        solana: { usd: 250, eur: 280 }
+    let rates = {
+        'btc': 40000,   // курс для BTC
+        'sol': 20,      // курс для SOL
+        'eth': 3000     // курс для ETH
     };
 
-    if (rates[crypto] && rates[crypto][currency]) {
-        const rate = rates[crypto][currency];
-        const result = amount * rate;
-        document.getElementById('result').innerText = 
-            `${amount} ${crypto.toUpperCase()} is approximately ${result.toFixed(2)} ${currency.toUpperCase()}`;
-    } else {
-        document.getElementById('result').innerText = 'Conversion rate not available';
-    }
-}
-
-// Додаємо обробник подій до форми
-document.getElementById('crypto-form').addEventListener('submit', calculate);
-*/
-document.getElementById('crypto-form').addEventListener('input', calculate);
-
-function calculate() {
-    const amount = parseFloat(document.getElementById('amount').value);
-    if (isNaN(amount)) {
-        document.getElementById('result').innerText = 'Please enter a valid amount';
-        return;
-    }
-    const crypto = document.getElementById('crypto').value;
-    const currency = document.getElementById('currency').value;
-
-    // Симуляція курсів конвертації
-    const rates = {
-        bitcoin: { usd: 30000, eur: 28000 },
-        ethereum: { usd: 2000, eur: 1800 },
-        solana: { usd: 250, eur: 280 }
-    };
-
-    if (rates[crypto] && rates[crypto][currency]) {
-        const rate = rates[crypto][currency];
-        const result = amount * rate;
-        document.getElementById('result').innerText = 
-            `${amount} ${crypto.toUpperCase()} = ${result.toFixed(2)} ${currency.toUpperCase()}`;
-    } else {
-        document.getElementById('result').innerText = 'Conversion rate not available';
-    }
-}
+    let usdAmount = cryptoAmount * rates[cryptoSelect];
+    usdAmountField.value = usdAmount.toFixed(2);
+});
