@@ -1,56 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "index.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Data</title>
+{% block title %}
+BTC-USDT
+{% endblock %}
+
+{% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
-</head>
+{% endblock %}
 
-<body>
-    <header class="header">
-        <div class="logo"><a href="{{ url_for('signin_page') }}">CryptoKupets</a></div>
-        <div class="nav-buttons">
-            <a href="{{ url_for('data_page') }}"><button>Data</button></a>
-            <button>Button 2</button>
-            <button>Button 3</button>
-        </div>
-        <div class="auth-buttons">
-            <a href="{{ url_for('signin_page') }}">
-                <button>Sign In</button>
-            </a>
-            <a href="{{ url_for('signup_page') }}">
-                <button>Sign Up</button>
-            </a>
-        </div>
-    </header>
-
-    <div class="container">
-        <h1>Cryptocurrency Data</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Symbol</th>
-                    <th>Last Price</th>
-                    <th>Change 24h</th>
-                    <th>Volume 24h</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in data['data'] %}
-                <tr>
-                    <td>{{ item['instId'] }}</td>
-                    <td>{{ item['last'] }}</td>
-                    <td>{{ item['changePercentage'] }}</td>
-                    <td>{{ item['vol'] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-</body>
-
-</html>
+{% block content %}
+<div class="container mt-5 mt-custom">
+    <h1 class="h3 mb-3 fw-bold text-center">Historical crypto info</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Instrument ID</th>
+                <th>Latest Index Price</th>
+                <th>24h High</th>
+                <th>24h Low</th>
+                <th>24h Open</th>
+                <th>Open Price (UTC 0)</th>
+                <th>Open Price (UTC 8)</th>
+                <th>Update Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <td>{{ item['instId'] }}</td>
+                <td>{{ item['idxPx'] }}</td>
+                <td>{{ item['high24h'] }}</td>
+                <td>{{ item['low24h'] }}</td>
+                <td>{{ item['open24h'] }}</td>
+                <td>{{ item['sodUtc0'] }}</td>
+                <td>{{ item['sodUtc8'] }}</td>
+                <td>{{ item['ts'] | to_datetime }}</td> <!-- Використовуємо фільтр для форматування часу -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

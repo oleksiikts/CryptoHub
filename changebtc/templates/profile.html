@@ -1,0 +1,43 @@
+{% extends "index.html" %}
+
+{% block title %}
+Your Profile
+{% endblock %}
+
+{% block head %}
+    <!-- Можна додати специфічні стилі або скрипти -->
+{% endblock %}
+
+{% block content %}
+<main class="form-signin col-lg-4 m-auto mt-custom fw-bold text-center">
+    <h1 class="h3 mb-3 fw-normal">Your Profile</h1>
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Тут відобразимо інформацію про користувача -->
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" value="{{ current_user.email }}" readonly>
+    </div>
+
+    <div class="mb-3">
+        <label for="login" class="form-label">Логін</label>
+        <input type="text" class="form-control" id="login" value="{{ current_user.login }}" readonly>
+    </div>
+
+    <div class="mb-3">
+        <label for="phone" class="form-label">Телефон</label>
+        <input type="text" class="form-control" id="phone" value="{{ current_user.phone }}" readonly>
+    </div>
+
+    <a href="{{ url_for('logout') }}" class="btn btn-danger">Вийти</a>
+</main>
+{% endblock %}
