@@ -4,7 +4,7 @@ from datetime import datetime
 from flask_login import LoginManager, login_required, current_user, UserMixin, login_user, logout_user
 import sqlite3
 import re
-
+import ccxt 
 
 
 # Підключення до бази даних
@@ -151,39 +151,29 @@ def signup_page():
 
 
 
-
-def get_index_tickers(inst_ids=['BTC-USDT', 'ETH-USDT', 'BNB-USDT', 'SOL-USDT']):
-    url = 'https://okx.com/api/v5/market/index-tickers'
-    results = []
-
-    # Проходимо по кожному індексу в списку
-    for inst_id in inst_ids:
-        params = {'instId': inst_id}  # Вказуємо параметр instId
-        try:
-            response = requests.get(url, params=params)
-            response.raise_for_status()
-            data = response.json()
-
-            if data['code'] == "0":
-                results.append(data['data'][0])  # Додаємо тільки перший елемент, якщо дані успішно отримано
-        except requests.RequestException as e:
-            print(f"Error fetching data for {inst_id}: {e}")
-
-    return results  # Повертаємо список результатів
-
+# Функція для отримання даних про BTC
+def get_btc_data():
+    exchange = ccxt.binance()  # Використовуємо біржу Binance
+    symbol = 'BTC/USDT'  # Визначаємо символ
+    try:
+        ticker = exchange.fetch_ticker(symbol)  # Отримуємо тикер
+        return ticker  # Повертаємо дані про BTC
+    except Exception as e:
+        print(f"Error fetching BTC data: {e}")
+        return None
 
 @app.route('/data')
 def data_page():
-    data = get_index_tickers()  # Отримуємо дані через API
+    btc_data = get_btc_data()  # Отримуємо дані про BTC
 
-    if data:  # Перевіряємо, чи отримали дані
-        return render_template('data.html', data=data)  # Передаємо дані до шаблону
+    if btc_data:  # Перевіряємо, чи отримали дані
+        return render_template('data.html', btc_data=btc_data)  # Передаємо дані до шаблону
     else:
         return "Error fetching data from API", 500
 
 @app.template_filter('to_datetime')
 def to_datetime(timestamp):
-    return datetime.fromtimestamp(int(timestamp) / 1000).strftime('%Y-%m-%d %H:%M:%S')
+    return datetime.fromtimestamp(timestamp / 1000).strftime('%Y-%m-%d %H:%M:%S')
 
 
 

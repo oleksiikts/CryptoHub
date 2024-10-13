@@ -10,33 +10,27 @@ BTC-USDT
 
 {% block content %}
 <div class="container mt-5 mt-custom">
-    <h1 class="h3 mb-3 fw-bold text-center">Historical crypto info</h1>
+    <h1 class="h3 mb-3 fw-bold text-center">BTC/USDT Information</h1>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Instrument ID</th>
-                <th>Latest Index Price</th>
+                <th>Latest Price</th>
                 <th>24h High</th>
                 <th>24h Low</th>
-                <th>24h Open</th>
-                <th>Open Price (UTC 0)</th>
-                <th>Open Price (UTC 8)</th>
-                <th>Update Time</th>
+                <th>24h Volume</th>
+                <th>Timestamp</th>
             </tr>
         </thead>
         <tbody>
-            {% for item in data %}
             <tr>
-                <td>{{ item['instId'] }}</td>
-                <td>{{ item['idxPx'] }}</td>
-                <td>{{ item['high24h'] }}</td>
-                <td>{{ item['low24h'] }}</td>
-                <td>{{ item['open24h'] }}</td>
-                <td>{{ item['sodUtc0'] }}</td>
-                <td>{{ item['sodUtc8'] }}</td>
-                <td>{{ item['ts'] | to_datetime }}</td> <!-- Використовуємо фільтр для форматування часу -->
+                <td>{{ btc_data['symbol'] }}</td>
+                <td>{{ btc_data['last'] }}</td>
+                <td>{{ btc_data['high'] }}</td>
+                <td>{{ btc_data['low'] }}</td>
+                <td>{{ btc_data['quoteVolume'] }}</td>
+                <td>{{ btc_data['timestamp'] | to_datetime }}</td>
             </tr>
-            {% endfor %}
         </tbody>
     </table>
 </div>
