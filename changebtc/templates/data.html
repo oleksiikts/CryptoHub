@@ -11,27 +11,59 @@ BTC-USDT
 {% block content %}
 <div class="container mt-5 mt-custom">
     <h1 class="h3 mb-3 fw-bold text-center">BTC/USDT Information</h1>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Instrument ID</th>
-                <th>Latest Price</th>
-                <th>24h High</th>
-                <th>24h Low</th>
-                <th>24h Volume</th>
-                <th>Timestamp</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ btc_data['symbol'] }}</td>
-                <td>{{ btc_data['last'] }}</td>
-                <td>{{ btc_data['high'] }}</td>
-                <td>{{ btc_data['low'] }}</td>
-                <td>{{ btc_data['quoteVolume'] }}</td>
-                <td>{{ btc_data['timestamp'] | to_datetime }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Instrument ID</th>
+                    <th>Latest Price</th>
+                    <th>24h High</th>
+                    <th>24h Low</th>
+                    <th>24h Volume</th>
+                    <th>Timestamp</th>
+                    <th>Recommendation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ btc_data['symbol'] }}</td>
+                    <td>{{ btc_data['last'] }}</td>
+                    <td>{{ btc_data['high'] }}</td>
+                    <td>{{ btc_data['low'] }}</td>
+                    <td>{{ btc_data['quoteVolume'] }}</td>
+                    <td>{{ btc_data['timestamp'] | to_datetime }}</td>
+                    <td>{{ decision }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<div class="container mt-5 mt-custom">
+    <h1 class="h3 mb-3 fw-bold text-center">Technical Indicators</h1>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead class="table-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Moving Average</td>
+                    <td>{{ moving_average }}</td>
+                    <td>{{ decision }}</td>
+                </tr>
+                <tr>
+                    <td>RSI</td>
+                    <td>{{ rsi }}</td>
+                    <td>{{ decision }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div> 
+
 {% endblock %}

@@ -5,7 +5,10 @@ from flask_login import LoginManager, login_required, current_user, UserMixin, l
 import sqlite3
 import re
 import ccxt 
+import numpy as np
 
+app = Flask(__name__)
+app.secret_key = 'hello'  # Додайте секретний ключ для флеш-повідомлень
 
 # Підключення до бази даних
 db = sqlite3.connect('cryptobase.db')
@@ -25,9 +28,6 @@ c.execute("""CREATE TABLE IF NOT EXISTS users (
 # Закриття з'єднання
 db.commit()  # Підтвердження змін
 db.close()
-
-app = Flask(__name__)
-app.secret_key = 'hello'  # Додайте секретний ключ для флеш-повідомлень
 
 def validate_phone(phone):
     pattern = r'^\+380\d{9}$'  # Формат +380XXXXXXXXX, де X - цифри
@@ -70,9 +70,6 @@ def load_user(user_id):
     if user_data:
         return User(*user_data)
     return None
-
-
-
 
 @app.route('/home')
 def index():
@@ -119,11 +116,6 @@ def logout():
     flash('Ви вийшли з системи.')
     return redirect(url_for('signin_page'))
 
-
-def validate_phone(phone):
-    pattern = r'^\+380\d{9}$'  # Дозволяємо формат +380yyxxxxxxx, де y - будь-які цифри
-    return re.match(pattern, phone) is not None
-
 @app.route('/signup', methods=['GET', 'POST'])
 def signup_page():
     if request.method == 'POST':
@@ -150,6 +142,11 @@ def signup_page():
     return render_template('signup.html')
 
 
+# Функція для отримання історичних даних
+def fetch_historical_data(symbol='BTC/USDT', timeframe='1d', limit=14):
+    exchange = ccxt.binance()
+    ohlcv = exchange.fetch_ohlcv(symbol, timeframe=timeframe, limit=limit)
+    return ohlcv
 
 # Функція для отримання даних про BTC
 def get_btc_data():
@@ -165,17 +162,50 @@ def get_btc_data():
 @app.route('/data')
 def data_page():
     btc_data = get_btc_data()  # Отримуємо дані про BTC
+    historical_data = fetch_historical_data()  # Отримуємо історичні дані
 
     if btc_data:  # Перевіряємо, чи отримали дані
-        return render_template('data.html', btc_data=btc_data)  # Передаємо дані до шаблону
+        prices = np.array([data[4] for data in historical_data])  # Закриті ціни з історичних даних
+        current_price = prices[-1]
+        
+        moving_average = calculate_moving_average(prices, 14)
+        rsi = calculate_rsi(prices)
+        decision = make_decision(current_price, moving_average, rsi)
+
+        return render_template('data.html', btc_data=btc_data, current_price=current_price, moving_average=moving_average, rsi=rsi, decision=decision)  # Передаємо дані до шаблону
     else:
         return "Error fetching data from API", 500
+
+def calculate_moving_average(prices, period):
+    return np.mean(prices[-period:])
+
+def calculate_rsi(prices, period=14):
+    deltas = np.diff(prices)
+    gain = np.where(deltas > 0, deltas, 0)
+    loss = np.where(deltas < 0, -deltas, 0)
+    
+    avg_gain = np.mean(gain[-period:])
+    avg_loss = np.mean(loss[-period:])
+    
+    if avg_loss == 0:
+        return 100  # Уникнути ділення на нуль
+    
+    rs = avg_gain / avg_loss
+    return 100 - (100 / (1 + rs))
+
+def make_decision(current_price, moving_average, rsi):
+    if current_price > moving_average:
+        return "Buy"
+    elif rsi > 70:
+        return "Sell"
+    elif rsi < 30:
+        return "Hold"
+    else:
+        return "Hold"
 
 @app.template_filter('to_datetime')
 def to_datetime(timestamp):
     return datetime.fromtimestamp(timestamp / 1000).strftime('%Y-%m-%d %H:%M:%S')
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
