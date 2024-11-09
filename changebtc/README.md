@@ -1,34 +1,35 @@
-# CryptoApp
+# Crypto Trading Dashboard
 
-## Опис проєкту
+A Flask-based web application for cryptocurrency analysis and user management. This app provides users with the ability to register, log in, view profile information, and check real-time and historical cryptocurrency data.
 
-CryptoApp — це веб-додаток на основі Flask для керування акаунтами користувачів та відображення актуальної інформації про курси криптовалют через API OKX. Додаток реалізує функціонал реєстрації, входу, виходу, перегляду профілю та обміну даними за допомогою API.
+## Features
 
-## Використані технології
+- **User Registration & Authentication**: _Users can register, log in, and view their profile information. User data is stored in a local SQLite database._
+- **Cryptocurrency Data**: _Fetches real-time Bitcoin (BTC) data and historical prices from Binance using the ccxt library._
+- **Technical Indicators**:
+  - _Moving Average (14-day)_
+  - _Relative Strength Index (RSI) (14-day)_
+  - _Basic buy/sell/hold decision-making based on market data and calculated indicators._
 
-- **Flask**: фреймворк для побудови веб-додатків.
-- **SQLite**: легка база даних для збереження даних користувачів.
-- **Flask-Login**: для керування сесіями користувачів та авторизації.
-- **requests**: для отримання даних з API OKX про криптовалюти.
-- **Jinja2**: для рендерингу HTML-шаблонів.
-- **HTML/CSS**: для побудови інтерфейсу.
+## Setup
 
-## Функціональні можливості
+1. **Install Dependencies**:
+   ```bash
+   pip install flask flask-login ccxt numpy
+   ```
 
-- Реєстрація та аутентифікація користувачів.
-- Валідація номера телефону користувача у форматі +380XXXXXXXXX.
-- Перегляд профілю користувача (після входу).
-- Вихід з профілю.
-- Виведення актуальних даних по криптовалютах (BTC, ETH, BNB, SOL) за допомогою API OKX.
+## Database Initialization:
 
-## Структура бази даних
+The app automatically creates an SQLite database (cryptobase.db) with a user table if it does not exist.
 
-В додатку використовується SQLite для збереження даних користувачів. Таблиця `users` має наступну структуру:
+# Run the App:
 
-| Поле     | Тип     | Опис                                   |
-| -------- | ------- | -------------------------------------- |
-| UserId   | INTEGER | Унікальний ідентифікатор користувача   |
-| Email    | TEXT    | Електронна пошта (унікальна)           |
-| Login    | TEXT    | Логін користувача                      |
-| Password | TEXT    | Пароль користувача                     |
-| Phone    | TEXT    | Номер телефону в форматі +380XXXXXXXXX |
+```bash
+python app.py
+```
+
+## Project Structure:
+
+- **app.py:** Main Flask application with routes for authentication, data retrieval, and technical analysis.
+- **Templates:** HTML templates for user interfaces, including sign-in, sign-up, profile, and data views.
+- **Database:** Local SQLite database for storing user data.

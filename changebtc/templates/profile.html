@@ -5,7 +5,7 @@ Your Profile
 {% endblock %}
 
 {% block head %}
-    <!-- Можна додати специфічні стилі або скрипти -->
+    
 {% endblock %}
 
 {% block content %}
@@ -22,7 +22,7 @@ Your Profile
       {% endif %}
     {% endwith %}
 
-    <!-- Тут відобразимо інформацію про користувача -->
+
     <div class="mb-3">
         <label for="email" class="form-label">Email</label>
         <input type="email" class="form-control" id="email" value="{{ current_user.email }}" readonly>
