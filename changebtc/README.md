@@ -26,6 +26,6 @@ The app automatically creates an SQLite database (cryptobase.db) with a user tab
 python app.py
 ```
 ## Project Structure:
-**app.py:** Main Flask application with routes for authentication, data retrieval, and technical analysis.
-**Templates:** HTML templates for user interfaces, including sign-in, sign-up, profile, and data views.
-**Database:** Local SQLite database for storing user data.
+- **app.py:** Main Flask application with routes for authentication, data retrieval, and technical analysis.
+- **Templates:** HTML templates for user interfaces, including sign-in, sign-up, profile, and data views.
+- **Database:** Local SQLite database for storing user data.
