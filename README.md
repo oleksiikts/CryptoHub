@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Crypto Trading Dashboard
 
 A Flask-based web application for cryptocurrency analysis and user management. This app provides users with the ability to register, log in, view profile information, and check real-time and historical cryptocurrency data.
@@ -33,3 +34,6 @@ python app.py
 - **app.py:** Main Flask application with routes for authentication, data retrieval, and technical analysis.
 - **Templates:** HTML templates for user interfaces, including sign-in, sign-up, profile, and data views.
 - **Database:** Local SQLite database for storing user data.
+=======
+
+>>>>>>> 35d26658225d59bb300130a72cfd02628da6797d
