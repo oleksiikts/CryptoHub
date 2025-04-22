@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+
+{% block title %}
+{{ coin_name }} Technical Analysis
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="container mt-5 mt-custom">
+    <h2 class="mb-4">📊 {{ coin_name }} Technical Analysis</h2>
+
+    <div class="card shadow-sm mb-5">
+        <div class="card-body">
+            <h4 class="card-title mb-3">Price & RSI Analysis for {{ coin_name }}</h4>
+            <div class="chart-container">
+                {{ graph_html|safe }}
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title">📈 Technical Indicators Explanation</h4>
+            <ul>
+                <li><strong>RSI (Relative Strength Index):</strong> RSI показує, чи є ринок перекупленим або перепроданим.</li>
+                <li><strong>Price Action:</strong> Остання ціна {{ coin_name }} може вказувати на можливі зміни тренду.</li>
+            </ul>
+        </div>
+    </div>
+</main>
+{% endblock %}

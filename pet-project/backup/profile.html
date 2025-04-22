@@ -1,0 +1,96 @@
+{% extends "index.html" %}
+
+{% block title %}
+Your Profile
+{% endblock %}
+
+{% block head %}
+<!-- Можна додати CSS або JS файли, якщо потрібно -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="container mt-5 mt-custom">
+
+    <!-- Заголовок профілю, вирівняний вліво -->
+    <h1 class="h3 mb-3 fw-normal">Your Profile</h1>
+
+    <!-- Виведення повідомлень flash -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="flashes">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <!-- Інформація про користувача -->
+    <div class="profile-info mb-5">
+        <div class="row">
+            <div class="col-md-3">
+                <strong>Email:</strong>
+            </div>
+            <div class="col-md-9">
+                {{ current_user.email }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <strong>Логін:</strong>
+            </div>
+            <div class="col-md-9">
+                {{ current_user.login }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <strong>Телефон:</strong>
+            </div>
+            <div class="col-md-9">
+                {{ current_user.phone }}
+            </div>
+        </div>
+    </div>
+
+    <!-- Кнопка виходу -->
+    <a href="{{ url_for('logout') }}" class="btn btn-danger">Вийти</a>
+
+    <!-- Таблиця улюблених монет -->
+    <h2 class="mt-5">Your Favorites</h2>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th scope="col">Coin</th>
+                <th scope="col">Last Price (USDT)</th>
+                <th scope="col">Conclusion on Technical Analysis</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for coin in favorites %}
+            <tr class="coin-item">
+                <td>
+                    <img src="{{ url_for('static', filename='images/' + coin.name.lower() + '.png') }}" alt="{{ coin.name }}" style="width: 20px; height: 20px;">
+                    {{ coin.name }}
+                </td>
+                <td>{{ coin.last_price }}</td>
+                <td>{{ coin.technical_analysis }}</td>
+                <td>
+                    <!-- Кошик для видалення монети зі списку -->
+                    <button class="delete-coin btn btn-danger btn-sm" data-coin="{{ coin.name }}">
+                        <i class="bi bi-trash"></i> <!-- Іконка кошика -->
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        
+        
+        
+        
+    </table>
+    
+
+</main>
+{% endblock %}

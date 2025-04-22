@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+
+{% block title %}
+    {{ symbol }} ETF Chart
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+<main class="container mt-5 mt-custom">
+    <h2 class="mb-4">📊 Графік ETF/Акції для {{ symbol }}</h2>
+
+    <div class="card shadow-sm mb-5">
+        <div class="card-body">
+            <h4 class="card-title mb-3">Ціна та RSI для {{ symbol }}</h4>
+            <div class="chart-container">
+                {{ graph_html | safe }}
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title">📈 Пояснення Технічних Індикаторів</h4>
+            <ul>
+                <li><strong>RSI (Relative Strength Index):</strong> Визначає стан перекупленості або перепроданості активу.</li>
+                <li><strong>Свічковий графік:</strong> Візуалізує зміну ціни за останній місяць по годинах (1h інтервал).</li>
+            </ul>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,71 @@
+
+#crypto-converter {
+    max-width: 400px;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+
+html, body {
+    height: 100%;
+}
+
+
+
+
+.mt-custom {
+    margin-top: 100px  !important; 
+}
+
+/* Загальні стилі для .coin-item */
+.coin-item {
+    position: relative;
+}
+
+/* Стиль для зірочки на сторінці data (для першого прикладу) */
+.favorite-star {
+    font-size: 20px;
+    color: #ccc; /* Сірий */
+    padding: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: absolute;
+    right: 10px;
+    opacity: 0; /* Зірочка початково невидима */
+}
+
+/* При наведенні на монету, зірочка стає видимою */
+.coin-item:hover .favorite-star {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.favorite-star.active {
+    color: gold; /* Золота зірочка */
+}
+
+/* Стиль для кнопки кошика на сторінці profile (для другого прикладу) */
+.delete-coin {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 0;
+    margin-left: 10px;
+    display: none; /* Початково кошик прихований */
+    transition: display 0s, opacity 0.3s ease, transform 0.2s ease-in-out;
+}
+
+/* Кошик стає видимим при наведенні на монету */
+.coin-item:hover .delete-coin {
+    display: inline-block; /* Кошик стає видимим */
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Іконка смітника */
+.delete-coin i {
+    font-size: 18px; /* Розмір іконки */
+    color: #dc3545; /* Колір червоний */
+}
+

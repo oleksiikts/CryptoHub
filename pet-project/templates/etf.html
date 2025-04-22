@@ -1,0 +1,42 @@
+{% extends "index.html" %}
+
+{% block title %}
+    ETF та Акції
+{% endblock %}
+{% block content %}
+<div class="container mt-5 mt-custom">
+    <h2 class="mb-4">📊 ETF Фонди та Акції (NASDAQ / S&P 500)</h2>
+    
+    <table class="table table-bordered table-hover shadow-sm bg-white">
+        <thead class="table-dark">
+            <tr>
+                <th>Тип</th>
+                <th>Символ</th>
+                <th>Назва</th>
+                <th>Ціна</th>
+                <th>Зміна за день (%)</th>
+                <th>Обсяг</th>
+                <th>Капіталізація</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for etf in etfs %}
+            <tr class="clickable-row" data-href="{{ url_for('etf_chart', symbol=etf.symbol) }}">
+                <td><span class="badge bg-{{ 'info' if etf.type == 'ETF' else 'success' }}">{{ etf.type }}</span></td>
+                <td>{{ etf.symbol }}</td>
+                <td>{{ etf.name }}</td>
+                <td>{{ etf.price | format_price }}</td>
+                <td class="{{ 'text-success' if etf.change > 0 else 'text-danger' }}">
+                    {{ etf.change | round(2) }}%
+                </td>
+                <td>{{ etf.volume | format_large }}</td>
+                <td>{{ etf.market_cap | format_large }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>

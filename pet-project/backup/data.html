@@ -1,0 +1,144 @@
+{% extends "index.html" %}
+
+{% block title %}
+Crypto Data
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mt-custom">
+    <h1 class="h3 mb-3 fw-bold text-center">Cryptocurrency Information</h1>
+    
+    <div class="container mt-5">
+        <h2 class="mb-4">Current Cryptocurrency Data</h2>
+        
+        <!-- Таблиця для відображення даних -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Coin</th>
+                    <th scope="col">Last Price (USDT)</th>
+                    <th scope="col">Market Cap (USDT)</th>
+                    <th scope="col">24h Trading Volume (USDT)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/bitcoin.png') }}" alt="BTC" style="width: 20px; height: 20px;"> BTC</td>
+                    <td>{{ btc_last_price if btc_last_price is not none else 'N/A' }}</td>
+                    <td>{{ btc_market_cap | round(2) if btc_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ btc_volume_24h | round(2) if btc_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/eth.png') }}" alt="ETH" style="width: 20px; height: 20px;"> ETH</td>
+                    
+                    <td>{{ eth_last_price if eth_last_price is not none else 'N/A' }}</td>
+                    <td>{{ eth_market_cap | round(2) if eth_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ eth_volume_24h | round(2) if eth_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/xrp.png') }}" alt="XRP" style="width: 20px; height: 20px;"> XRP</td>
+                    
+                    <td>{{ xrp_last_price if xrp_last_price is not none else 'N/A' }}</td>
+                    <td>{{ xrp_market_cap | round(2) if xrp_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ xrp_volume_24h | round(2) if xrp_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/ltc.png') }}" alt="LTC" style="width: 20px; height: 20px;"> LTC</td>
+                    
+                    <td>{{ ltc_last_price if ltc_last_price is not none else 'N/A' }}</td>
+                    <td>{{ ltc_market_cap | round(2) if ltc_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ ltc_volume_24h | round(2) if ltc_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/bnb.png') }}" alt="BNB" style="width: 20px; height: 20px;"> BNB</td>
+                    
+                    <td>{{ bnb_last_price if bnb_last_price is not none else 'N/A' }}</td>
+                    <td>{{ bnb_market_cap | round(2) if bnb_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ bnb_volume_24h | round(2) if bnb_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/sol.png') }}" alt="SOL" style="width: 20px; height: 20px;"> SOL</td>
+                    
+                    <td>{{ sol_last_price if sol_last_price is not none else 'N/A' }}</td>
+                    <td>{{ sol_market_cap | round(2) if sol_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ sol_volume_24h | round(2) if sol_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/ada.png') }}" alt="ADA" style="width: 20px; height: 20px;"> ADA</td>
+                    
+                    <td>{{ ada_last_price if ada_last_price is not none else 'N/A' }}</td>
+                    <td>{{ ada_market_cap | round(2) if ada_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ ada_volume_24h | round(2) if ada_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/doge.png') }}" alt="DOGE" style="width: 20px; height: 20px;"> DOGE</td>
+                   
+                    <td>{{ doge_last_price if doge_last_price is not none else 'N/A' }}</td>
+                    <td>{{ doge_market_cap | round(2) if doge_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ doge_volume_24h | round(2) if doge_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/dot.png') }}" alt="DOT" style="width: 20px; height: 20px;"> DOT</td>
+                    
+                    <td>{{ dot_last_price if dot_last_price is not none else 'N/A' }}</td>
+                    <td>{{ dot_market_cap | round(2) if dot_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ dot_volume_24h | round(2) if dot_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/pepe.png') }}" alt="PEPE" style="width: 20px; height: 20px;"> PEPE</td>
+                    
+                    <td>{{ pepe_last_price if pepe_last_price is not none else 'N/A' }}</td>
+                    <td>{{ pepe_market_cap | round(2) if pepe_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ pepe_volume_24h | round(2) if pepe_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/near.png') }}" alt="NEAR" style="width: 20px; height: 20px;"> NEAR</td>
+                    
+                    <td>{{ near_last_price if near_last_price is not none else 'N/A' }}</td>
+                    <td>{{ near_market_cap | round(2) if near_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ near_volume_24h | round(2) if near_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/kas.png') }}" alt="KAS" style="width: 20px; height: 20px;"> KAS</td>
+                    
+                    <td>{{ kas_last_price if kas_last_price is not none else 'N/A' }}</td>
+                    <td>{{ kas_market_cap | round(2) if kas_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ kas_volume_24h | round(2) if kas_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/arb.png') }}" alt="ARB" style="width: 20px; height: 20px;"> ARB</td>
+                    
+                    <td>{{ arb_last_price if arb_last_price is not none else 'N/A' }}</td>
+                    <td>{{ arb_market_cap | round(2) if arb_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ arb_volume_24h | round(2) if arb_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/atom.png') }}" alt="ATOM" style="width: 20px; height: 20px;"> ATOM</td>
+                    
+                    <td>{{ atom_last_price if atom_last_price is not none else 'N/A' }}</td>
+                    <td>{{ atom_market_cap | round(2) if atom_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ atom_volume_24h | round(2) if atom_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/shib.png') }}" alt="SHIB" style="width: 20px; height: 20px;"> SHIB</td>
+                
+                    <td>{{ shib_last_price if shib_last_price is not none else 'N/A' }}</td>
+                    <td>{{ shib_market_cap | round(2) if shib_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ shib_volume_24h | round(2) if shib_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+                <tr>
+                    <td><img src="{{ url_for('static', filename='images/xlm.png') }}" alt="XLM" style="width: 20px; height: 20px;"> XLM</td>
+                    
+                    <td>{{ xlm_last_price if xlm_last_price is not none else 'N/A' }}</td>
+                    <td>{{ xlm_market_cap | round(2) if xlm_market_cap is not none else 'N/A' }}</td>
+                    <td>{{ xlm_volume_24h | round(2) if xlm_volume_24h is not none else 'N/A' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

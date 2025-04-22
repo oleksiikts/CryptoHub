@@ -5,12 +5,16 @@ Your Profile
 {% endblock %}
 
 {% block head %}
-    
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 {% endblock %}
 
 {% block content %}
-<main class="form-signin col-lg-4 m-auto mt-custom fw-bold text-center">
-    <h1 class="h3 mb-3 fw-normal">Your Profile</h1>
+<main class="container mt-5 mt-custom">
+
+    
+ 
+
     
     {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -22,22 +26,72 @@ Your Profile
       {% endif %}
     {% endwith %}
 
-
-    <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" value="{{ current_user.email }}" readonly>
+    
+    <div class="card shadow-sm mb-5">
+        <div class="card-body">
+            <h4 class="card-title mb-3">👤 Your profile</h4>
+            <div class="profile-info">
+                <div class="info-item mb-2">
+                    <strong>Email:</strong> {{ current_user.email }}
+                </div>
+                <div class="info-item mb-2">
+                    <strong>Login:</strong> {{ current_user.login }}
+                </div>
+                <div class="info-item mb-2">
+                    <strong>Telephone:</strong> {{ current_user.phone }}
+                </div>
+            </div>
+            <a href="{{ url_for('logout') }}" class="btn btn-danger mt-3">Exit</a>
+        </div>
     </div>
 
-    <div class="mb-3">
-        <label for="login" class="form-label">Логін</label>
-        <input type="text" class="form-control" id="login" value="{{ current_user.login }}" readonly>
-    </div>
+ 
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h4 class="card-title">⭐ Favorite coins</h4>
+        <div class="table-responsive mt-3">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center align-middle">Coin</th>
+                        <th scope="col" class="text-center align-middle">Last Price (USDT)</th>
+                        <th scope="col" class="text-center align-middle">Conclusion on Technical Analysis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for coin in favorites %}
+                    <tr class="coin-item">
+                        <td class="text-center align-middle">
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                                <img src="{{ url_for('static', filename='images/' + coin.name.lower() + '.png') }}"
+                                     alt="{{ coin.name }}" style="width: 20px; height: 20px;">
+                                <span>{{ coin.name }}</span>
+                                <span class="favorite-star {% if coin.name in favorite_names %}active{% endif %}"
+                                      data-coin="{{ coin.name }}"
+                                      title="{% if coin.name in favorite_names %}Видалити з обраного{% else %}Додати в обране{% endif %}">
+                                    {% if coin.name in favorite_names %}&#9733;{% else %}&#9734;{% endif %}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="text-center align-middle">{{ coin.last_price | format_price }}</td>
 
-    <div class="mb-3">
-        <label for="phone" class="form-label">Телефон</label>
-        <input type="text" class="form-control" id="phone" value="{{ current_user.phone }}" readonly>
+                        <td class="text-center align-middle">
+                            {{ coin.explanation | safe }}
+                            
+                            <div class="d-flex justify-content-center mt-2">
+                                <a href="{{ url_for('chart', coin_name=coin.name) }}" class="btn btn-info btn-sm">Додатковий аналіз</a>
+                            </div>
+                            
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
+</div>
 
-    <a href="{{ url_for('logout') }}" class="btn btn-danger">Вийти</a>
+
+
 </main>
 {% endblock %}

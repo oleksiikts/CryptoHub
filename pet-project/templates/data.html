@@ -1,69 +1,59 @@
 {% extends "index.html" %}
 
 {% block title %}
-BTC-USDT
-{% endblock %}
-
-{% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    Crypto Data
 {% endblock %}
 
 {% block content %}
 <div class="container mt-5 mt-custom">
-    <h1 class="h3 mb-3 fw-bold text-center">BTC/USDT Information</h1>
-    <div class="table-responsive">
-        <table class="table table-hover table-bordered">
-            <thead class="table-light">
+    <div class="container mt-5">
+        <h2 class="mb-4">Current Cryptocurrency Data</h2>
+        
+        <table class="table table-bordered table-hover shadow-sm bg-white">
+            <thead class="table-dark">
                 <tr>
-                    <th>Instrument ID</th>
-                    <th>Latest Price</th>
-                    <th>24h High</th>
-                    <th>24h Low</th>
-                    <th>24h Volume</th>
-                    <th>Timestamp</th>
-                    <th>Recommendation</th>
+                    <th scope="col">Coin</th>
+                    <th scope="col">Last Price (USDT)</th>
+                    <th scope="col">Change (24h %)</th> 
+                    <th scope="col">Market Cap (USDT)</th>
+                    <th scope="col">24h Trading Volume (USDT)</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>{{ btc_data['symbol'] }}</td>
-                    <td>{{ btc_data['last'] }}</td>
-                    <td>{{ btc_data['high'] }}</td>
-                    <td>{{ btc_data['low'] }}</td>
-                    <td>{{ btc_data['quoteVolume'] }}</td>
-                    <td>{{ btc_data['timestamp'] | to_datetime }}</td>
-                    <td>{{ decision }}</td>
+                {% for coin, data in coins_data.items() %}
+                <tr class="coin-item">
+                    <td>
+                        <img src="{{ url_for('static', filename='images/' + coin.lower() + '.png') }}" alt="{{ coin }}" style="width: 20px; height: 20px;">
+                        {{ coin }}
+                        <span
+                            class="favorite-star {% if coin in favorites %}active{% endif %}"
+                            data-coin="{{ coin }}"
+                            title="{% if coin in favorites %}Видалити з обраного{% else %}Додати в обране{% endif %}"
+                        >
+                            {% if coin in favorites %}&#9733;{% else %}&#9734;{% endif %}
+                        </span>
+                    </td>
+
+                    <td>
+                        {{ data['last_price'] | format_price if data['last_price'] is not none else 'N/A' }}
+                    </td>
+
+                    <td>
+                        {% if data['change_percent'] is not none %}
+                            <span class="{{ 'text-success' if data['change_percent'] > 0 else 'text-danger' }}">
+                                {{ data['change_percent'] | round(2) }}%
+                            </span>
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+
+                    <td>{{ data['market_cap'] | format_large if data['market_cap'] is not none else 'N/A' }}</td>
+                    <td>{{ data['volume_24h'] | format_large if data['volume_24h'] is not none else 'N/A' }}</td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
-
-<div class="container mt-5 mt-custom">
-    <h1 class="h3 mb-3 fw-bold text-center">Technical Indicators</h1>
-    <div class="table-responsive">
-        <table class="table table-hover table-bordered">
-            <thead class="table-light">
-                <tr>
-                    <th>Name</th>
-                    <th>Value</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Moving Average</td>
-                    <td>{{ moving_average }}</td>
-                    <td>{{ decision }}</td>
-                </tr>
-                <tr>
-                    <td>RSI</td>
-                    <td>{{ rsi }}</td>
-                    <td>{{ decision }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div> 
-
 {% endblock %}

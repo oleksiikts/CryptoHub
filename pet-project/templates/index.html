@@ -11,6 +11,7 @@
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">  
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
     {% block head %}
     <title>{% block title %}{% endblock %}CryptoHub</title>
     {% endblock %}
@@ -18,40 +19,54 @@
 
 <body class="d-flex flex-column min-vh-100">
     <header>
-        
-
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ url_for('index') }}">CryptoHub</a>
+                <a class="navbar-brand" href="{{ url_for('home') }}">CryptoHub</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        {% if current_user.is_authenticated %}
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('profile_page') }}">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+                        </li>
+                    {% else %}
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('signin_page') }}">Sign In</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('signup_page') }}">Sign Up</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('data_page') }}">Data</a>
-                        </li>
+                    {% endif %}
+                    
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('data_page') }}">Cryptocurrency</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('etf_table') }}">ETF</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('learn_page') }}">Learn</a>
+                    </li>
+                    
                     </ul>
                 </div>
             </div>
         </nav>
-        
     </header>
 
     {% block content %}
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
-    
     <script type="text/javascript">
         const message = "{{ get_flashed_messages()[0] if get_flashed_messages() else '' }}";
-        
         if (message) {
             Toastify({
                 text: message,
@@ -63,29 +78,73 @@
             }).showToast();
         }
     </script>
+<main class="flex-grow-1 mt-custom">
+    
+    <section class="text-center py-5 mt-5 bg-light">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Ласкаво просимо до CryptoHub!</h1>
+            <p class="lead">Аналізуй монети, додавай в улюблене, слідкуй за ринком і новинами.</p>
+            <a href="{{ url_for('signup_page') }}" class="btn btn-primary btn-lg mt-3">Почати</a>
+        </div>
+    </section>
 
-    <main class="container flex-grow-1 mt-custom"> 
-        <h1 class="h3 mb-3 text-center fw-bold">Currency Exchange Calculator</h1>
-        <form id="crypto-converter" class="w-100 m-auto">
-            <div class="form-floating">
-                <select class="form-select" id="cryptoSelect" required>
-                    <option value="btc">Bitcoin (BTC)</option>
-                    <option value="sol">Solana (SOL)</option>
-                    <option value="eth">Ethereum (ETH)</option>
-                </select>
-                <label for="cryptoSelect">Select cryptocurrency</label>
+    
+    <section class="container py-5">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <h4>📊 Технічний аналіз</h4>
+                <p>Автоматичні рекомендації на основі RSI, EMA та MACD.</p>
             </div>
-            <div class="form-floating mt-3">
-                <input type="number" class="form-control" id="cryptoAmount" placeholder="Enter amount" required>
-                <label for="cryptoAmount">Amount</label>
+            <div class="col-md-4">
+                <h4>⭐ Улюблені монети</h4>
+                <p>Обирай монети, які цікавлять саме тебе, і слідкуй за ними в профілі.</p>
             </div>
-            <div class="form-floating mt-3">
-                <input type="number" class="form-control" id="usdAmount" placeholder="USD Amount" readonly>
-                <label for="usdAmount">USD Equivalent</label>
+            <div class="col-md-4">
+                <h4>📰 Новини ринку</h4>
+                <p>Читайте останні крипто-новини з Cointelegraph прямо на сайті.</p>
             </div>
-            <button class="btn btn-primary w-100 py-2 mt-3" type="submit">Convert</button>
-        </form>
-    </main>
+        </div>
+    </section>
+
+   
+    
+<section class="bg-light py-5">
+    <div class="container text-center">
+        <h3 class="mb-4">🎓 Відвідайте нашу Академію</h3>
+        <p>Поглиблюйте свої знання про криптовалюту, технології блокчейн і трейдинг. Безкоштовні статті, поради та аналітика для новачків і профі.</p>
+        <a href="{{ url_for('learn_page') }}" class="btn btn-outline-primary btn-lg mt-3">Академія</a>
+    </div>
+</section>
+
+
+    
+    <section class="container py-4">
+        <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/coinMarquee.js"></script>
+        <div id="coinmarketcap-widget-marquee" coins="1,1027,825,1839,5426" currency="USD" theme="light"
+            transparent="false" show-symbol-logo="true"></div>
+    </section>
+
+    <section class="container py-5">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold">📰 Актуальні крипто-новини</h2>
+            <p class="text-muted">Останні статті від Cointelegraph</p>
+        </div>
+    
+        <div class="row g-4">
+            {% for item in cointelegraph_news[:6] %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-primary">{{ item.title }}</h5>
+                        <p class="card-text"><small class="text-muted">{{ item.published }}</small></p>
+                        <a href="{{ item.link }}" target="_blank" class="mt-auto btn btn-outline-dark btn-sm">Читати</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    
     {% endblock %}
 
     {% with messages = get_flashed_messages() %}
@@ -100,13 +159,11 @@
 
     <footer class="bg-dark text-light py-3 mt-auto">
         <div class="container">
-            <p class="text-center mb-0">© 2024</p>
+            <p class="text-center mb-0">© 2025 CryptoHub</p>
         </div>
     </footer>
 
-    <!-- Підключення JS -->
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </body>
 
 </html>

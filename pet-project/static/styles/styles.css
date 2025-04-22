@@ -5,14 +5,121 @@
     margin-top: 2rem;
 }
 
-
 html, body {
     height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+section {
+    flex-grow: 1; /* Заставляє цей елемент зайняти все доступне місце */
+}
+
+footer {
+    margin-top: 0; /* Видаляє можливі відступи знизу */
+    padding-top: 0;
 }
 
 
+/* Стилі для інформації про користувача */
+.profile-info {
+    display: flex;
+    flex-direction: column; /* Розміщує елементи в стовпчик */
+    gap: 10px; /* Додає відстань між елементами */
+}
+
+.info-item {
+    display: flex;
+    align-items: center; /* Вирівнює елементи по вертикалі */
+}
+
+.info-item strong {
+    margin-right: 10px; /* Відстань між міткою і значенням */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
 
 
 .mt-custom {
     margin-top: 100px  !important; 
 }
+/* Загальні стилі для .coin-item */
+.coin-item {
+    position: relative;
+}
+
+/* Стиль для зірочки */
+.favorite-star {
+    font-size: 20px;
+    color: #ccc; /* Сірий колір */
+    padding: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: absolute;
+    right: 10px;
+    opacity: 0; /* Початково зірочка невидима */
+}
+
+/* При наведенні на монету, зірочка стає видимою */
+.coin-item:hover .favorite-star {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.favorite-star.active {
+    color: gold; /* Золота зірочка, коли монета у фаворитах */
+}
+
+
+
+
+.flashes {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+  
+  .flashes li {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  /* Стиль для успішного повідомлення */
+  .flashes li.success {
+    background-color: #4CAF50; /* зелений */
+    border-left: 5px solid #388E3C;
+  }
+  
+  /* Стиль для повідомлення з помилкою */
+  .flashes li.error {
+    background-color: #f44336; /* червоний */
+    border-left: 5px solid #D32F2F;
+  }
+  
+  /* Стиль для попередження */
+  .flashes li.warning {
+    background-color: #ff9800; /* оранжевий */
+    border-left: 5px solid #F57C00;
+  }
+  
+  /* Стиль для інфо-повідомлення */
+  .flashes li.info {
+    background-color: #2196F3; /* синій */
+    border-left: 5px solid #1976D2;
+  }
+  
