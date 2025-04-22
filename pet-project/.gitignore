@@ -1,2 +1,3 @@
 docsforme.md
-venv/
+__pycache__
+venv311/
